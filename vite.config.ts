@@ -15,5 +15,14 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: './'
+  define: {
+    __WS_TOKEN__: JSON.stringify(process.env.WS_TOKEN || "")
+  },
+  // This ensures that the router works properly in production
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+  },
+  // Remove base path to fix routing issues
+  base: '/'
 });
