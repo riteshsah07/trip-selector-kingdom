@@ -1,9 +1,18 @@
 
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const { userId } = useParams();
+  const navigate = useNavigate();
+  
+  // Handle invalid userIds
+  React.useEffect(() => {
+    // If userId is not a number, redirect to 404
+    if (userId && isNaN(Number(userId))) {
+      navigate('/not-found');
+    }
+  }, [userId, navigate]);
   
   return (
     <div className="min-h-screen bg-gray-100">
@@ -16,7 +25,7 @@ const Profile = () => {
                 <Link to="/" className="text-gray-800 hover:text-blue-600 transition-colors">Home</Link>
               </li>
               <li>
-                <Link to="/profile/1" className="text-gray-800 hover:text-blue-600 transition-colors">Profile</Link>
+                <Link to={`/profile/${userId}`} className="text-gray-800 hover:text-blue-600 transition-colors">Profile</Link>
               </li>
             </ul>
           </nav>
